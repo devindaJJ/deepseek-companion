@@ -6,6 +6,7 @@ sys.path.append(str(src_path))
 
 from src.models.deepseek_client import DeepSeekClient
 from src.examples.usage_examples import run_all_examples
+from src.demo_showcase import run_demo_showcase
 import argparse
 
 def main():
@@ -14,11 +15,17 @@ def main():
     parser.add_argument("--example", action="store_true", help="Run examples")
     parser.add_argument("--chat", action="store_true", help="Start interactive chat")
     parser.add_argument("--query", type=str, help="Single query to send")
+    parser.add_argument("--demo", action="store_true", help="Run demo showcase (no API key needed)")
     parser.add_argument("--model", type=str, default="chat", 
                        choices=["chat", "coder", "creative"],
                        help="Model type to use")
     
     args = parser.parse_args()
+    
+    # Demo mode - doesn't require API key
+    if args.demo:
+        run_demo_showcase()
+        return
     
     # Initialize client
     try:
